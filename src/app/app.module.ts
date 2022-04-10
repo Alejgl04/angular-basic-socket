@@ -13,12 +13,18 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { ChatComponent } from './components/chat/chat.component';
+import { UsersComponent } from './components/users/users.component';
+import { LoginComponent } from './pages/login/login.component';
+import { MessagesComponent } from './pages/messages/messages.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     FooterComponent,
-    ChatComponent
+    ChatComponent,
+    UsersComponent,
+    LoginComponent,
+    MessagesComponent
   ],
   imports: [
     BrowserModule,

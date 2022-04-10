@@ -13,7 +13,6 @@ export class FooterComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    console.log(this.wsService.socketStatus)
   }
   
 }

@@ -29,11 +29,18 @@ export class WebsocketService {
   }
 
   sendEmit( event: string, payload?: any, callback?: Function  ) {
-    console.log('Emitiendo mensaje...');
+    console.log('Emitiendo', event);
     this.socket.emit( event, payload, callback );
   }
 
   listen( event: string ) {
     return this.socket.fromEvent( event );
+  }
+
+  loginWs( name: string ) {
+    console.log('Configurando' , name);
+    this.sendEmit( 'config-user', { name }, (resp: any) => {
+      console.log( resp );
+    });
   }
 }
