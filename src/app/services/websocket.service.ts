@@ -33,4 +33,7 @@ export class WebsocketService {
     this.socket.emit( event, payload, callback );
   }
 
+  listen( event: string ) {
+    return this.socket.fromEvent( event );
+  }
 }

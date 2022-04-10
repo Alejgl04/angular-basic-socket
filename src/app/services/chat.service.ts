@@ -10,12 +10,15 @@ export class ChatService {
     public wsService:WebsocketService
   ) { }
 
-    SendMessage( message: string ) {
-      const payload = {
-        de: 'Fernando',
-        body: message
-      };
-      this.wsService.sendEmit( 'message', payload )
-    }
-
+  SendMessage( message: string ) {
+    const payload = {
+      de: 'Fernando',
+      body: message
+    };
+    this.wsService.sendEmit( 'message', payload )
+  }
+  
+  getMessages() {
+    return this.wsService.listen('new-message');
+  }
 }
