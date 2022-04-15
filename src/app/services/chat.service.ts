@@ -21,4 +21,8 @@ export class ChatService {
   getMessages() {
     return this.wsService.listen('new-message');
   }
+
+  getPrivateMessages() {
+    return this.wsService.listen( 'private-message' );
+  }
 }
