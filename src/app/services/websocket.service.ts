@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Socket } from 'ngx-socket-io';
 import { map } from 'rxjs/operators';
+import { User } from '../models/user.model';
 
 
 @Injectable({
@@ -9,11 +10,12 @@ import { map } from 'rxjs/operators';
 export class WebsocketService {
 
   public socketStatus: boolean = false;
-
+  public username!: User;
   constructor(
     private socket: Socket
   ) { 
     this.checkStatus();
+    this.getStorage();
   }
 
   checkStatus() {
@@ -38,9 +40,29 @@ export class WebsocketService {
   }
 
   loginWs( name: string ) {
-    console.log('Configurando' , name);
-    this.sendEmit( 'config-user', { name }, (resp: any) => {
-      console.log( resp );
+
+    return new Promise<void>( ( resolve, reject ) => {
+        this.sendEmit( 'config-user', { name }, (resp: any) => {
+          this.username = new User( name );
+          this.setStorage();
+          resolve();
+        });
     });
   }
+
+  getUsername() {
+    return this.username;
+  }
+
+  setStorage(): void {
+    localStorage.setItem( 'username', JSON.stringify( this.username ));
+  }
+
+  getStorage() {
+    if( localStorage.getItem( 'username' ) ) {
+      this.username = JSON.parse( localStorage.getItem( 'username')  || '{}');
+      this.loginWs( this.username.name );
+    }
+  }
+
 }
