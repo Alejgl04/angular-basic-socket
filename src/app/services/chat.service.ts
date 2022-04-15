@@ -12,8 +12,8 @@ export class ChatService {
 
   SendMessage( message: string ) {
     const payload = {
-      de: this.wsService.getUsername().name,
-      body: message
+      from: this.wsService.getUsername().name,
+      content: message
     };
     this.wsService.sendEmit( 'message', payload )
   }
