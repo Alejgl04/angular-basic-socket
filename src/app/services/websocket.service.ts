@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { Socket } from 'ngx-socket-io';
 import { map } from 'rxjs/operators';
 import { User } from '../models/user.model';
@@ -12,7 +13,8 @@ export class WebsocketService {
   public socketStatus: boolean = false;
   public username!: User;
   constructor(
-    private socket: Socket
+    private socket: Socket,
+    private router: Router
   ) { 
     this.checkStatus();
     this.getStorage();
@@ -22,6 +24,7 @@ export class WebsocketService {
     this.socket.on('connect', () => {
       console.log('conectado al servidor');
       this.socketStatus = true;
+      this.getStorage();
     });
 
     this.socket.on('disconnect', () => {
@@ -48,6 +51,15 @@ export class WebsocketService {
           resolve();
         });
     });
+  }
+
+  logOut() { 
+    localStorage.removeItem('username');
+    const payload = {
+      name: 'no-name'
+    };
+    this.sendEmit('config-user', payload, () => {});
+    this.router.navigateByUrl('');
   }
 
   getUsername() {
